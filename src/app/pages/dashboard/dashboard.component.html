@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-container">
+
+  <app-column title="NEW TASK" [showAdd]="true">
+    <app-task-card 
+      title="Design UI Wireframe"
+      project="Project Name"
+      date="14/03/2025">
+    </app-task-card>
+
+    <app-task-card 
+      title="Design Task Filtering UI"
+      project="Project Name"
+      date="14/03/2025">
+    </app-task-card>
+  </app-column>
+
+  <app-column title="IN PROGRESS">
+    <app-task-card 
+      title="Implement Task Sorting"
+      project="Project Name"
+      date="14/03/2025">
+    </app-task-card>
+
+    <app-task-card 
+      title="Implement Task Deadline Alerts"
+      project="Project Name"
+      date="14/03/2025">
+    </app-task-card>
+  </app-column>
+
+  <app-column title="COMPLETED">
+    <app-task-card 
+      title="Persist Theme Setting"
+      project="Project Name"
+      date="24/03/2025">
+    </app-task-card>
+
+    <app-task-card 
+      title="LocalStorage Integration"
+      project="Project Name"
+      date="04/03/2025">
+    </app-task-card>
+  </app-column>
+
+  <app-column title="DELIVERED">
+    <app-task-card 
+      title="User Testing & Feedback"
+      project="Project Name"
+      date="17/02/2025">
+    </app-task-card>
+  </app-column>
+
+</div>
+

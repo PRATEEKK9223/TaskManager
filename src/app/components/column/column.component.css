@@ -1,0 +1,31 @@
+.column {
+  background: #b8bce3;
+  padding: 15px;
+  border-radius: 6px;
+  width: 260px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  background: #444;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+.task-container {
+  flex: 1;
+}
+
+.add-btn {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
