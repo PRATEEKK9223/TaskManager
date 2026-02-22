@@ -7,6 +7,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TaskCardComponent } from './components/task-card/task-card.component';
 import { ColumnComponent } from './components/column/column.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,11 +16,13 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     NavbarComponent,
     TaskCardComponent,
     ColumnComponent,
-    DashboardComponent
+    DashboardComponent,
+    TaskFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+     ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

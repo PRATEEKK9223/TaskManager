@@ -1,0 +1,16 @@
+<div class="overlay">
+  <div class="form-container">
+    <h3>Create New Task</h3>
+
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+      <input type="text" placeholder="Task Title" formControlName="title">
+      <input type="text" placeholder="Project Name" formControlName="project">
+      <input type="date" formControlName="date">
+
+      <div class="buttons">
+        <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
+        <button type="submit" class="save">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
