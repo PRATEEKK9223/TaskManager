@@ -2,74 +2,71 @@
 
 <div class="dashboard-container">
 
-  <!-- <app-column title="NEW TASK" [showAdd]="true">
-    <app-task-card 
-      title="Design UI Wireframe"
-      project="Project Name"
-      date="14/03/2025">
-    </app-task-card>
-
-    <app-task-card 
-      title="Design Task Filtering UI"
-      project="Project Name"
-      date="14/03/2025">
-    </app-task-card>
-  </app-column> -->
+  
 
   <app-column 
-        title="NEW TASK" 
-        [showAdd]="true"
-        (addTask)="openForm()">
+  title="NEW TASK" 
+  [showAdd]="true"
+  (addTask)="openForm()">
 
-        <app-task-card 
-          *ngFor="let task of newTasks"
-          [title]="task.title"
-          [project]="task.project"
-          [date]="task.date">
-        </app-task-card>
+  <app-task-card 
+    *ngFor="let task of tasks"
+    [task]="task"
+    (edit)="editTask($event)"
+    (delete)="deleteTask($event)">
+  </app-task-card>
 
-      </app-column>
+</app-column>
 
-      <app-task-form 
-        *ngIf="showForm"
-        (close)="closeForm()"
-        (save)="saveTask($event)">
+<app-task-form 
+  *ngIf="showForm"
+  [task]="selectedTask"
+  [isEditMode]="isEditMode"
+  (close)="closeForm()"
+  (save)="saveTask($event)">
 </app-task-form>
 
   <app-column title="IN PROGRESS">
     <app-task-card 
-      title="Implement Task Sorting"
-      project="Project Name"
-      date="14/03/2025">
-    </app-task-card>
+  [task]="{
+    id: 100,
+    title: 'Implement Task Sorting',
+    project: 'Project Name',
+    date: '14/03/2025'
+  }">
+</app-task-card>
 
-    <app-task-card 
-      title="Implement Task Deadline Alerts"
-      project="Project Name"
-      date="14/03/2025">
-    </app-task-card>
-  </app-column>
+      <app-task-card 
+  [task]="{
+    id: 100,
+    title: 'Implement Task Sorting',
+    project: 'Project Name',
+    date: '14/03/2025'
+  }">
+</app-task-card>
+    </app-column>
 
   <app-column title="COMPLETED">
-    <app-task-card 
-      title="Persist Theme Setting"
-      project="Project Name"
-      date="24/03/2025">
-    </app-task-card>
+   <app-task-card 
+  [task]="{
+    id: 100,
+    title: 'Implement Task Sorting',
+    project: 'Project Name',
+    date: '14/03/2025'
+  }">
+</app-task-card>
 
-    <app-task-card 
-      title="LocalStorage Integration"
-      project="Project Name"
-      date="04/03/2025">
-    </app-task-card>
   </app-column>
 
   <app-column title="DELIVERED">
-    <app-task-card 
-      title="User Testing & Feedback"
-      project="Project Name"
-      date="17/02/2025">
-    </app-task-card>
+        <app-task-card 
+          [task]="{
+            id: 100,
+            title: 'Implement Task Sorting',
+            project: 'Project Name',
+            date: '14/03/2025'
+          }">
+      </app-task-card>
   </app-column>
 
 </div>

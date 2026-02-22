@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-task-card',
@@ -7,8 +7,19 @@ import { Input } from '@angular/core';
   styleUrls: ['./task-card.component.css']
 })
 export class TaskCardComponent {
-  @Input() title!: string;
-  @Input() project!: string;
-  @Input() date!: string;
+  
+
+  @Input() task: any;
+
+  @Output() edit = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<number>();
+
+  onEdit() {
+    this.edit.emit(this.task);
+  }
+
+  onDelete() {
+    this.delete.emit(this.task.id);
+  }
 
 }

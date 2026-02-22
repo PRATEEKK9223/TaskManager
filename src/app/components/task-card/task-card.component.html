@@ -1,5 +1,9 @@
 <div class="task-card">
-  <h4>{{title}}</h4>
-  <p class="project">{{project}}</p>
-  <p class="date">{{date}}</p>
+  <h4>{{task.title}}</h4>
+  <p class="project">{{task.project}}</p>
+  <p class="date">{{task.date}}</p>
+  <div class="actions">
+    <button class="edit-btn" (click)="onEdit()">Edit</button>
+    <button class="delete-btn" (click)="onDelete()">Delete</button>
+  </div>
 </div>

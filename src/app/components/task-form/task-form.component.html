@@ -1,6 +1,6 @@
 <div class="overlay">
   <div class="form-container">
-    <h3>Create New Task</h3>
+    <h3>{{isEditMode ? 'Edit Task' : 'Create New Task'}}</h3>
 
     <form [formGroup]="taskForm" (ngSubmit)="submit()">
       <input type="text" placeholder="Task Title" formControlName="title">
@@ -9,7 +9,7 @@
 
       <div class="buttons">
         <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
-        <button type="submit" class="save">Save</button>
+        <button type="submit" class="save"> {{isEditMode ? 'Update' : 'Save'}}</button>
       </div>
     </form>
   </div>
