@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, Input, OnChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators  } from '@angular/forms';
 
 @Component({
   selector: 'app-task-form',
@@ -17,13 +17,13 @@ export class TaskFormComponent implements OnChanges {
   taskForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.taskForm = this.fb.group({
-      id: [''],
-      title: [''],
-      project: [''],
-      date: ['']
-    });
-  }
+  this.taskForm = this.fb.group({
+    id: [''],
+    title: ['', Validators.required],
+    project: ['', Validators.required],
+    date: ['', Validators.required]
+  });
+}
 
   ngOnChanges() {
     if (this.task) {
@@ -31,12 +31,15 @@ export class TaskFormComponent implements OnChanges {
     }
   }
 
-  submit() {
-    const formValue = this.taskForm.value;
-    console.log("Form Value:", formValue);   // 👈 DEBUG
+ submit() {
 
-    this.save.emit(formValue);
+  if (this.taskForm.invalid) {
+    this.taskForm.markAllAsTouched();   // shows errors
+    return;
   }
+
+  this.save.emit(this.taskForm.value);
+}
   closeForm() {
     this.close.emit();
   }

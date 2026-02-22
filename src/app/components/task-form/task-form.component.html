@@ -3,9 +3,20 @@
     <h3>{{isEditMode ? 'Edit Task' : 'Create New Task'}}</h3>
 
     <form [formGroup]="taskForm" (ngSubmit)="submit()">
-      <input type="text" placeholder="Task Title" formControlName="title">
-      <input type="text" placeholder="Project Name" formControlName="project">
-      <input type="date" formControlName="date">
+        <input type="text" placeholder="Task Title" formControlName="title">
+        <div class="error" *ngIf="taskForm.get('title')?.touched && taskForm.get('title')?.invalid">
+        Title is required
+        </div>
+
+        <input type="text" placeholder="Project Name" formControlName="project">
+        <div class="error" *ngIf="taskForm.get('project')?.touched && taskForm.get('project')?.invalid">
+        Project name is required
+        </div>
+
+        <input type="date" formControlName="date">
+        <div class="error" *ngIf="taskForm.get('date')?.touched && taskForm.get('date')?.invalid">
+        Date is required
+        </div>
 
       <div class="buttons">
         <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
