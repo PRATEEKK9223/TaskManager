@@ -1,30 +1,5 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-dashboard',
-//   templateUrl: './dashboard.component.html',
-//   styleUrls: ['./dashboard.component.css']
-// })
-// export class DashboardComponent {
-//     showForm = false;
-
-//   newTasks: any[] = [];
-
-//   openForm() {
-//     this.showForm = true;
-//   }
-
-//   closeForm() {
-//     this.showForm = false;
-//   }
-
-//   saveTask(task: any) {
-//     this.newTasks.push(task);
-//     this.showForm = false;
-//   }
-// }
-
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,49 +7,116 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  columnForm!: FormGroup;
 
-  showForm = false;
+  constructor(private fb: FormBuilder) {
+  this.columnForm = this.fb.group({
+    title: ['', [Validators.required, Validators.minLength(3)]]
+  });
+}
+
+  showTaskForm = false;
+  showColumnForm = false;
   isEditMode = false;
 
-  tasks: any[] = [];
   selectedTask: any = null;
+  selectedColumnIndex!: number;
 
-  openForm() {
+  columns: any[] = [
+    {
+      title: 'NEW TASK',
+      tasks: []
+    },
+    {
+      title: 'IN PROGRESS',
+      tasks: []
+    },
+    {
+      title: 'COMPLETED',
+      tasks: []
+    }
+  ];
+
+  // -------- TASK LOGIC --------
+
+  openTaskForm(columnIndex: number) {
+    this.selectedColumnIndex = columnIndex;
     this.isEditMode = false;
     this.selectedTask = null;
-    this.showForm = true;
-  }
-
-  closeForm() {
-    this.showForm = false;
+    this.showTaskForm = true;
   }
 
   saveTask(task: any) {
-
-    if (this.isEditMode) {
-      const index = this.tasks.findIndex(t => t.id === task.id);
-      if (index !== -1) {
-        this.tasks[index] = task;
-      }
-    } else {
-      task.id = Date.now();
-      this.tasks.push(task);
-    }
-
-    this.showForm = false;
+    task.id = Date.now();
+    this.columns[this.selectedColumnIndex].tasks.push(task);
+    this.showTaskForm = false;
   }
 
-  editTask(task: any) {
-    this.isEditMode = true;
-    this.selectedTask = { ...task };
-    this.showForm = true;
-  }
-
-  deleteTask(id: number) {
-    const confirmDelete = confirm("Are you sure you want to delete this task?");
+  deleteTask(columnIndex: number, taskId: number) {
+    const confirmDelete = confirm("Are you sure?");
     if (confirmDelete) {
-      this.tasks = this.tasks.filter(task => task.id !== id);
+      this.columns[columnIndex].tasks =
+        this.columns[columnIndex].tasks.filter((t: any) => t.id !== taskId);
     }
   }
+
+  editTask(columnIndex: number, task: any) {
+    this.selectedColumnIndex = columnIndex;
+    this.selectedTask = { ...task };
+    this.isEditMode = true;
+    this.showTaskForm = true;
+  }
+
+  // -------- COLUMN LOGIC --------
+
+  openColumnForm() {
+    this.showColumnForm = true;
+  }
+
+//   saveColumn() {
+
+//   if (this.columnForm.invalid) {
+//     this.columnForm.markAllAsTouched();
+//     return;
+//   }
+
+//   const columnTitle = this.columnForm.value.title;
+
+//   this.columns.push({
+//     title: columnTitle,
+//     tasks: []
+//   });
+
+//   this.columnForm.reset();
+//   this.showColumnForm = false;
+// }
+
+saveColumn() {
+
+  if (this.columnForm.invalid) {
+    this.columnForm.markAllAsTouched();
+    return;
+  }
+
+  let columnTitle = this.columnForm.value.title.trim();
+
+  // 🔥 CHECK FOR DUPLICATE (case insensitive)
+  const exists = this.columns.some(
+    column => column.title.toLowerCase() === columnTitle.toLowerCase()
+  );
+
+  if (exists) {
+    this.columnForm.get('title')?.setErrors({ duplicate: true });
+    return;
+  }
+
+  this.columns.push({
+    title: columnTitle,
+    tasks: []
+  });
+
+  this.columnForm.reset();
+  this.showColumnForm = false;
+}
 
 }

@@ -1,73 +1,80 @@
-<app-navbar></app-navbar>
+<app-navbar (addColumn)="openColumnForm()"></app-navbar>
 
 <div class="dashboard-container">
 
-  
+  <!-- ADD COLUMN BUTTON -->
+  <!-- <button class="add-column-btn" (click)="openColumnForm()">
+    + Add Column
+  </button> -->
 
-  <app-column 
-  title="NEW TASK" 
-  [showAdd]="true"
-  (addTask)="openForm()">
+  <!-- DYNAMIC COLUMNS -->
+ <app-column 
+  *ngFor="let column of columns; let i = index"
+  [title]="column.title"
+  [showAdd]="i === 0"
+  (addTask)="openTaskForm(i)">
 
-  <app-task-card 
-    *ngFor="let task of tasks"
-    [task]="task"
-    (edit)="editTask($event)"
-    (delete)="deleteTask($event)">
-  </app-task-card>
-
-</app-column>
-
-<app-task-form 
-  *ngIf="showForm"
-  [task]="selectedTask"
-  [isEditMode]="isEditMode"
-  (close)="closeForm()"
-  (save)="saveTask($event)">
-</app-task-form>
-
-  <app-column title="IN PROGRESS">
     <app-task-card 
-  [task]="{
-    id: 100,
-    title: 'Implement Task Sorting',
-    project: 'Project Name',
-    date: '14/03/2025'
-  }">
-</app-task-card>
+      *ngFor="let task of column.tasks"
+      [task]="task"
+      (edit)="editTask(i, $event)"
+      (delete)="deleteTask(i, $event)">
+    </app-task-card>
 
-      <app-task-card 
-  [task]="{
-    id: 100,
-    title: 'Implement Task Sorting',
-    project: 'Project Name',
-    date: '14/03/2025'
-  }">
-</app-task-card>
-    </app-column>
-
-  <app-column title="COMPLETED">
-   <app-task-card 
-  [task]="{
-    id: 100,
-    title: 'Implement Task Sorting',
-    project: 'Project Name',
-    date: '14/03/2025'
-  }">
-</app-task-card>
-
-  </app-column>
-
-  <app-column title="DELIVERED">
-        <app-task-card 
-          [task]="{
-            id: 100,
-            title: 'Implement Task Sorting',
-            project: 'Project Name',
-            date: '14/03/2025'
-          }">
-      </app-task-card>
   </app-column>
 
 </div>
 
+<!-- TASK FORM -->
+<app-task-form 
+  *ngIf="showTaskForm"
+  [task]="selectedTask"
+  [isEditMode]="isEditMode"
+  (close)="showTaskForm = false"
+  (save)="saveTask($event)">
+</app-task-form>
+
+<!-- COLUMN FORM -->
+<!-- COLUMN FORM MODAL -->
+<div class="overlay" *ngIf="showColumnForm">
+  <div class="form-container">
+
+    <h3>Create New Column</h3>
+
+    <form [formGroup]="columnForm" (ngSubmit)="saveColumn()">
+
+      <input 
+        type="text"
+        placeholder="Column Name"
+        formControlName="title">
+
+      <!-- Error Messages -->
+      <div class="error" 
+           *ngIf="columnForm.get('title')?.touched && columnForm.get('title')?.errors?.['required']">
+        Column name is required
+      </div>
+
+      <div class="error"
+     *ngIf="columnForm.get('title')?.touched && columnForm.get('title')?.errors?.['duplicate']">
+      Column name already exists
+    </div>
+
+      <div class="error" 
+           *ngIf="columnForm.get('title')?.touched && columnForm.get('title')?.errors?.['minlength']">
+        Minimum 3 characters required
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="cancel" (click)="showColumnForm=false">
+          Cancel
+        </button>
+
+        <button type="submit" class="save" [disabled]="columnForm.invalid">
+          Create
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

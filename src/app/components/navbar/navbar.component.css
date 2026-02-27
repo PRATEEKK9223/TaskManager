@@ -25,3 +25,20 @@
   background: white;
   color: black;
 }
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.add-column-btn {
+  background: white;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.add-column-btn:hover {
+  background: #ddd;
+}
