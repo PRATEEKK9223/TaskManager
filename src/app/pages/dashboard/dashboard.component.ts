@@ -8,11 +8,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DashboardComponent {
   columnForm!: FormGroup;
+  private STORAGE_KEY = 'kanban-data';
 
   constructor(private fb: FormBuilder) {
   this.columnForm = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]]
   });
+  this.loadFromLocalStorage();
 }
 
   showTaskForm = false;
@@ -49,6 +51,7 @@ export class DashboardComponent {
   saveTask(task: any) {
     task.id = Date.now();
     this.columns[this.selectedColumnIndex].tasks.push(task);
+    this.saveToLocalStorage(); 
     this.showTaskForm = false;
   }
 
@@ -58,6 +61,7 @@ export class DashboardComponent {
       this.columns[columnIndex].tasks =
         this.columns[columnIndex].tasks.filter((t: any) => t.id !== taskId);
     }
+    this.saveToLocalStorage(); 
   }
 
   editTask(columnIndex: number, task: any) {
@@ -65,6 +69,7 @@ export class DashboardComponent {
     this.selectedTask = { ...task };
     this.isEditMode = true;
     this.showTaskForm = true;
+    this.saveToLocalStorage(); 
   }
 
   // -------- COLUMN LOGIC --------
@@ -73,23 +78,7 @@ export class DashboardComponent {
     this.showColumnForm = true;
   }
 
-//   saveColumn() {
 
-//   if (this.columnForm.invalid) {
-//     this.columnForm.markAllAsTouched();
-//     return;
-//   }
-
-//   const columnTitle = this.columnForm.value.title;
-
-//   this.columns.push({
-//     title: columnTitle,
-//     tasks: []
-//   });
-
-//   this.columnForm.reset();
-//   this.showColumnForm = false;
-// }
 
 saveColumn() {
 
@@ -114,9 +103,29 @@ saveColumn() {
     title: columnTitle,
     tasks: []
   });
+  this.saveToLocalStorage();
 
   this.columnForm.reset();
   this.showColumnForm = false;
+}
+
+// Local storage method
+
+loadFromLocalStorage() {
+
+  const data = localStorage.getItem(this.STORAGE_KEY);
+
+  if (data) {
+    this.columns = JSON.parse(data);
+  }
+
+}
+
+saveToLocalStorage() {
+  localStorage.setItem(
+    this.STORAGE_KEY,
+    JSON.stringify(this.columns)
+  );
 }
 
 }
