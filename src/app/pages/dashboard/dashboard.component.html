@@ -13,7 +13,7 @@
   [title]="column.title"
   [showAdd]="i === 0"
   (addTask)="openTaskForm(i)"
-    (deleteColumn)="deleteColumn(i)">
+  (deleteColumn)="requestDeleteColumn(i)">
 
   <div
     cdkDropList
@@ -91,3 +91,15 @@
 
   </div>
 </div>
+
+
+<!-- CONFIRM DELETE MODAL -->
+ <app-confirm-modal
+  *ngIf="showConfirmModal"
+  [title]="modalTitle"
+  [message]="modalMessage"
+  [isConfirm]="isConfirmMode"
+  (confirm)="confirmDeleteColumn()"
+  (cancel)="cancelDelete()">
+</app-confirm-modal>
+

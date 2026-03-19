@@ -52,12 +52,7 @@ export class DashboardComponent {
     this.showTaskForm = true;
   }
 
-  // saveTask(task: any) {
-  //   task.id = Date.now();
-  //   this.columns[this.selectedColumnIndex].tasks.push(task);
-  //   this.saveToLocalStorage(); 
-  //   this.showTaskForm = false;
-  // }
+
 
   saveTask(task: any) {
 
@@ -204,23 +199,62 @@ drop(event: CdkDragDrop<any[]>) {
   this.saveToLocalStorage();
 }
 
-deleteColumn(index: number) {
+
+showConfirmModal = false;
+columnToDeleteIndex!: number;
+
+modalTitle = '';
+modalMessage = '';
+isConfirmMode = true;
+
+requestDeleteColumn(index: number) {
 
   const column = this.columns[index];
 
+  // ❌ BLOCK CASE
   if (column.tasks.length > 0) {
-    alert("Cannot delete column. Move or delete all tasks first.");
+    this.modalTitle = "Cannot Delete Column";
+    this.modalMessage = "This column has tasks. Move or delete them first.";
+    this.isConfirmMode = false;
+    this.showConfirmModal = true;
     return;
   }
 
-  if (index === 0) {
-    alert("Cannot delete default column.");
-    return;
-  }
-
-  this.columns.splice(index, 1);
-
-  this.saveToLocalStorage();
+  // ✅ CONFIRM DELETE
+  this.columnToDeleteIndex = index;
+  this.modalTitle = "Delete Column";
+  this.modalMessage = "Are you sure you want to delete this column?";
+  this.isConfirmMode = true;
+  this.showConfirmModal = true;
 }
+
+confirmDeleteColumn() {
+  this.columns.splice(this.columnToDeleteIndex, 1);
+  this.saveToLocalStorage();
+  this.showConfirmModal = false;
+}
+
+cancelDelete() {
+  this.showConfirmModal = false;
+}
+
+// deleteColumn(index: number) {
+
+//   const column = this.columns[index];
+
+//   if (column.tasks.length > 0) {
+//     alert("Cannot delete column. Move or delete all tasks first.");
+//     return;
+//   }
+
+//   if (index === 0) {
+//     alert("Cannot delete default column.");
+//     return;
+//   }
+
+//   this.columns.splice(index, 1);
+
+//   this.saveToLocalStorage();
+// }
 
 }

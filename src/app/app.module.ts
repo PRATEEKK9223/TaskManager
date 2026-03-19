@@ -10,6 +10,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TaskCardComponent,
     ColumnComponent,
     DashboardComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
