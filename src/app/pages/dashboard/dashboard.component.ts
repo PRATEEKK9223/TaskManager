@@ -52,12 +52,41 @@ export class DashboardComponent {
     this.showTaskForm = true;
   }
 
+  // saveTask(task: any) {
+  //   task.id = Date.now();
+  //   this.columns[this.selectedColumnIndex].tasks.push(task);
+  //   this.saveToLocalStorage(); 
+  //   this.showTaskForm = false;
+  // }
+
   saveTask(task: any) {
+
+  const columnIndex = this.columns.findIndex(
+    col => col.title === task.status
+  );
+
+  if (columnIndex === -1) return;
+
+  if (this.isEditMode) {
+
+    // Remove from old column
+    this.columns.forEach(col => {
+      col.tasks = col.tasks.filter((t: any) => t.id !== task.id);
+    });
+
+    // Add to new column
+    this.columns[columnIndex].tasks.push(task);
+
+  } else {
+
     task.id = Date.now();
-    this.columns[this.selectedColumnIndex].tasks.push(task);
-    this.saveToLocalStorage(); 
-    this.showTaskForm = false;
+    this.columns[columnIndex].tasks.push(task);
+
   }
+
+  this.saveToLocalStorage();
+  this.showTaskForm = false;
+}
 
   deleteTask(columnIndex: number, taskId: number) {
     const confirmDelete = confirm("Are you sure?");
@@ -152,12 +181,23 @@ drop(event: CdkDragDrop<any[]>) {
   } else {
 
     // Move between columns
+    const movedTask = event.previousContainer.data[event.previousIndex];
+
     transferArrayItem(
       event.previousContainer.data,
       event.container.data,
       event.previousIndex,
       event.currentIndex
     );
+
+    // 🔥 UPDATE STATUS BASED ON TARGET COLUMN
+    const targetColumn = this.columns.find(
+      col => col.tasks === event.container.data
+    );
+
+    if (targetColumn) {
+      movedTask.status = targetColumn.title;
+    }
 
   }
 

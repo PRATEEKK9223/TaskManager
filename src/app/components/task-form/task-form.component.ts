@@ -10,9 +10,11 @@ export class TaskFormComponent implements OnChanges {
 
   @Input() task: any;
   @Input() isEditMode: boolean = false;
+  @Input() columns: any[] = [];
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
+  
 
   taskForm: FormGroup;
 
@@ -21,7 +23,9 @@ export class TaskFormComponent implements OnChanges {
     id: [''],
     title: ['', Validators.required],
     project: ['', Validators.required],
-    date: ['', Validators.required]
+    date: ['', Validators.required],
+    status: ['', Validators.required]   // ✅ NEW FIELD
+
   });
 }
 

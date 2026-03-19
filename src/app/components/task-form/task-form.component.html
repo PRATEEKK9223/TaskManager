@@ -18,6 +18,18 @@
         Date is required
         </div>
 
+        <select formControlName="status">
+          <option value="">Select Status</option>
+          <option *ngFor="let col of columns" [value]="col.title">
+            {{ col.title }}
+          </option>
+        </select>
+
+      <div class="error"
+        *ngIf="taskForm.get('status')?.touched && taskForm.get('status')?.invalid">
+        Status is required
+      </div>
+
       <div class="buttons">
         <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
         <button type="submit" class="save"> {{isEditMode ? 'Update' : 'Save'}}</button>

@@ -41,6 +41,7 @@
   *ngIf="showTaskForm"
   [task]="selectedTask"
   [isEditMode]="isEditMode"
+  [columns]="columns"
   (close)="showTaskForm = false"
   (save)="saveTask($event)">
 </app-task-form>
