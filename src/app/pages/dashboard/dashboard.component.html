@@ -27,7 +27,7 @@
       <app-task-card
         [task]="task"
         (edit)="editTask(i, $event)"
-        (delete)="deleteTask(i, $event)">
+        (delete)="requestDeleteTask(i, $event)">
       </app-task-card>
     </div>
 
@@ -99,7 +99,7 @@
   [title]="modalTitle"
   [message]="modalMessage"
   [isConfirm]="isConfirmMode"
-  (confirm)="confirmDeleteColumn()"
+  (confirm)="confirmAction()"
   (cancel)="cancelDelete()">
 </app-confirm-modal>
 

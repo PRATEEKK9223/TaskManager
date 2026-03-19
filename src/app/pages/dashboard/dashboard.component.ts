@@ -83,14 +83,23 @@ export class DashboardComponent {
   this.showTaskForm = false;
 }
 
-  deleteTask(columnIndex: number, taskId: number) {
-    const confirmDelete = confirm("Are you sure?");
-    if (confirmDelete) {
-      this.columns[columnIndex].tasks =
-        this.columns[columnIndex].tasks.filter((t: any) => t.id !== taskId);
-    }
-    this.saveToLocalStorage(); 
-  }
+
+taskToDeleteId!: number;
+taskToDeleteColumnIndex!: number;
+
+
+requestDeleteTask(columnIndex: number, taskId: number) {
+
+  this.taskToDeleteId = taskId;
+  this.taskToDeleteColumnIndex = columnIndex;
+
+  this.modalTitle = "Delete Task";
+  this.modalMessage = "Are you sure you want to delete this task?";
+  this.isConfirmMode = true;
+
+  this.showConfirmModal = true;
+}
+
 
   editTask(columnIndex: number, task: any) {
     this.selectedColumnIndex = columnIndex;
@@ -228,14 +237,33 @@ requestDeleteColumn(index: number) {
   this.showConfirmModal = true;
 }
 
-confirmDeleteColumn() {
-  this.columns.splice(this.columnToDeleteIndex, 1);
+confirmAction() {
+
+  // 🔥 If deleting column
+  if (this.isConfirmMode && this.columnToDeleteIndex !== undefined) {
+    this.columns.splice(this.columnToDeleteIndex, 1);
+    this.columnToDeleteIndex = undefined as any;
+  }
+
+  // 🔥 If deleting task
+  if (this.taskToDeleteId !== undefined) {
+    this.columns[this.taskToDeleteColumnIndex].tasks =
+      this.columns[this.taskToDeleteColumnIndex].tasks.filter(
+        (t: any) => t.id !== this.taskToDeleteId
+      );
+
+    this.taskToDeleteId = undefined as any;
+  }
+
   this.saveToLocalStorage();
   this.showConfirmModal = false;
 }
 
 cancelDelete() {
   this.showConfirmModal = false;
+
+  this.columnToDeleteIndex = undefined as any;
+  this.taskToDeleteId = undefined as any;
 }
 
 // deleteColumn(index: number) {
