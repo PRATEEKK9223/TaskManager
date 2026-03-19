@@ -204,4 +204,23 @@ drop(event: CdkDragDrop<any[]>) {
   this.saveToLocalStorage();
 }
 
+deleteColumn(index: number) {
+
+  const column = this.columns[index];
+
+  if (column.tasks.length > 0) {
+    alert("Cannot delete column. Move or delete all tasks first.");
+    return;
+  }
+
+  if (index === 0) {
+    alert("Cannot delete default column.");
+    return;
+  }
+
+  this.columns.splice(index, 1);
+
+  this.saveToLocalStorage();
+}
+
 }

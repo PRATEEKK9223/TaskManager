@@ -1,5 +1,14 @@
 <div class="column">
-  <div class="column-header">{{title}}</div>
+  <div class="column-header">
+     <span>{{ title }}</span>
+
+    <button 
+      class="delete-column-btn"
+      (click)="onDeleteColumn()">
+      ✖
+    </button>
+
+  </div>
 
   <div class="task-container">
     <ng-content></ng-content>

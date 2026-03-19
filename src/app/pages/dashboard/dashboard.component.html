@@ -12,7 +12,8 @@
   *ngFor="let column of columns; let i = index"
   [title]="column.title"
   [showAdd]="i === 0"
-  (addTask)="openTaskForm(i)">
+  (addTask)="openTaskForm(i)"
+    (deleteColumn)="deleteColumn(i)">
 
   <div
     cdkDropList

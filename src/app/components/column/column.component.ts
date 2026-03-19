@@ -11,6 +11,12 @@ export class ColumnComponent {
   @Input() showAdd: boolean = false;
   @Output() addTask = new EventEmitter<void>();
 
+  @Output() deleteColumn = new EventEmitter<void>();
+
+  onDeleteColumn() {
+    this.deleteColumn.emit();
+  }
+
   openForm() {
     this.addTask.emit();
   }
