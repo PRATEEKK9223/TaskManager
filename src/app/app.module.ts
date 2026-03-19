@@ -9,6 +9,8 @@ import { ColumnComponent } from './components/column/column.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-     ReactiveFormsModule
+     ReactiveFormsModule,
+     DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

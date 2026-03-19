@@ -14,14 +14,25 @@
   [showAdd]="i === 0"
   (addTask)="openTaskForm(i)">
 
-    <app-task-card 
-      *ngFor="let task of column.tasks"
-      [task]="task"
-      (edit)="editTask(i, $event)"
-      (delete)="deleteTask(i, $event)">
-    </app-task-card>
+  <div
+    cdkDropList
+    #list="cdkDropList"
+    [cdkDropListData]="column.tasks"
+   [cdkDropListConnectedTo]="connectedDropLists"
+    (cdkDropListDropped)="drop($event)"
+    class="task-drop-zone">
 
-  </app-column>
+    <div *ngFor="let task of column.tasks" cdkDrag>
+      <app-task-card
+        [task]="task"
+        (edit)="editTask(i, $event)"
+        (delete)="deleteTask(i, $event)">
+      </app-task-card>
+    </div>
+
+  </div>
+
+</app-column>
 
 </div>
 

@@ -63,3 +63,22 @@
   border: none;
   padding: 6px 12px;
 }
+
+/* Drag and Drop Styles */
+
+.task-drop-zone {
+  min-height: 50px;
+}
+
+.cdk-drag-preview {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  border-radius: 6px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms ease;
+}

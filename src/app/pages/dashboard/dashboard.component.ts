@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } 
+from '@angular/cdk/drag-drop';
+import { ViewChildren, QueryList } from '@angular/core';
+import { CdkDropList } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-dashboard',
@@ -126,6 +130,38 @@ saveToLocalStorage() {
     this.STORAGE_KEY,
     JSON.stringify(this.columns)
   );
+}
+
+// Drag and Drop Logic
+@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
+get connectedDropLists(): CdkDropList[] {
+  return this.dropLists ? this.dropLists.toArray() : [];
+}
+
+drop(event: CdkDragDrop<any[]>) {
+
+  if (event.previousContainer === event.container) {
+
+    // Same column reorder
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+  } else {
+
+    // Move between columns
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+  }
+
+  this.saveToLocalStorage();
 }
 
 }
