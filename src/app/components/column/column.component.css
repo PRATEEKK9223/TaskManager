@@ -2,10 +2,11 @@
   background: #b8bce3;
   padding: 15px;
   border-radius: 6px;
-  width: 260px;
+  min-width: 260px;
   min-height: 420px;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 .column-header {
