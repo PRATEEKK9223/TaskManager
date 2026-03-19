@@ -13,10 +13,7 @@
   z-index: 9999;
 
   animation: fadeInOut 3s ease forwards;
-
-  width:auto;
-  min-width: 90%;
-  text-align: center;
+  
 }
 
 .toast.success {
