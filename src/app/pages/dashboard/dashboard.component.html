@@ -103,3 +103,10 @@
   (cancel)="cancelDelete()">
 </app-confirm-modal>
 
+<!-- TOAST NOTIFICATION -->
+ <app-toast 
+  *ngIf="showToast"
+  [message]="toastMessage"
+  [type]="toastType">
+</app-toast>
+

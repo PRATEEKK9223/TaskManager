@@ -11,6 +11,7 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal.comp
     ColumnComponent,
     DashboardComponent,
     TaskFormComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

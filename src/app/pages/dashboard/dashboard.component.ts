@@ -81,6 +81,9 @@ export class DashboardComponent {
 
   this.saveToLocalStorage();
   this.showTaskForm = false;
+
+  // Toast Notification
+  this.showToastMessage("Task added successfully!", "success");
 }
 
 
@@ -144,6 +147,9 @@ saveColumn() {
 
   this.columnForm.reset();
   this.showColumnForm = false;
+
+  // Toast Notification
+  this.showToastMessage("Column added successfully!", "success");
 }
 
 // Local storage method
@@ -243,6 +249,7 @@ confirmAction() {
   if (this.isConfirmMode && this.columnToDeleteIndex !== undefined) {
     this.columns.splice(this.columnToDeleteIndex, 1);
     this.columnToDeleteIndex = undefined as any;
+    this.showToastMessage("Column deleted!", "error");
   }
 
   // 🔥 If deleting task
@@ -253,10 +260,12 @@ confirmAction() {
       );
 
     this.taskToDeleteId = undefined as any;
+    this.showToastMessage("Task deleted!", "error");
   }
 
   this.saveToLocalStorage();
   this.showConfirmModal = false;
+
 }
 
 cancelDelete() {
@@ -266,23 +275,21 @@ cancelDelete() {
   this.taskToDeleteId = undefined as any;
 }
 
-// deleteColumn(index: number) {
 
-//   const column = this.columns[index];
+// Toast Logic
 
-//   if (column.tasks.length > 0) {
-//     alert("Cannot delete column. Move or delete all tasks first.");
-//     return;
-//   }
+showToast = false;
+toastMessage = '';
+toastType: 'success' | 'error' = 'success';
 
-//   if (index === 0) {
-//     alert("Cannot delete default column.");
-//     return;
-//   }
+showToastMessage(message: string, type: 'success' | 'error' = 'success') {
+  this.toastMessage = message;
+  this.toastType = type;
+  this.showToast = true;
 
-//   this.columns.splice(index, 1);
-
-//   this.saveToLocalStorage();
-// }
+  setTimeout(() => {
+    this.showToast = false;
+  }, 3000);
+}
 
 }
