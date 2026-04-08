@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { ToastComponent } from './shared/toast/toast.component';
     DashboardComponent,
     TaskFormComponent,
     ConfirmModalComponent,
-    ToastComponent
+    ToastComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
